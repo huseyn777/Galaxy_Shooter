@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] //lets manipulate private variables in inspecter
-    private float speed = 3.5f;
+    //[SerializeField] lets manipulate private variables in inspecter
+    [SerializeField] private float speed = 3.5f;
+    [SerializeField] private GameObject laserPrefab;
+    [SerializeField] private float fireRate = 0.15f;
+    private float nextFire = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,8 +20,17 @@ public class Player : MonoBehaviour
     void Update()
     {  
         Movment();
+        LaserShoot();
     }
-
+    void LaserShoot()
+    {
+        if(Input.GetKeyDown(KeyCode.Space) & Time.time > nextFire)
+        {
+            nextFire = Time.time + fireRate;
+            Instantiate(laserPrefab, new Vector3(transform.position.x, transform.position.y + 0.8f, transform.position.z), Quaternion.identity);
+            //Quaternion.identity -> default rotaition
+        }
+    }
     void Movment()
     {
        float horizontalInput = Input.GetAxis("Horizontal");
