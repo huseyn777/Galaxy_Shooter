@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject laserPrefab;
     [SerializeField] private float fireRate = 0.15f;
     private float nextFire = 0;
+    [SerializeField] private int lives = 3;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +23,7 @@ public class Player : MonoBehaviour
         Movment();
         LaserShoot();
     }
+    
     void LaserShoot()
     {
         if(Input.GetKeyDown(KeyCode.Space) & Time.time > nextFire)
@@ -31,6 +33,7 @@ public class Player : MonoBehaviour
             //Quaternion.identity -> default rotaition
         }
     }
+    
     void Movment()
     {
        float horizontalInput = Input.GetAxis("Horizontal");
@@ -61,5 +64,15 @@ public class Player : MonoBehaviour
        {
             transform.position = new Vector3(11.3f,transform.position.y,transform.position.z);
        }
+    }
+
+    public void Damage()
+    {
+        lives--;
+
+        if(lives == 0)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
