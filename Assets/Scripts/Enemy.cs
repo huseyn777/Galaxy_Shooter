@@ -4,14 +4,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private float speed = 4f;
+    private float speed = 4f;
     
-    // Start is called before the first frame update
-    void Start()
-    {
-        transform.position = new Vector3(Random.Range(-8f, 8f),7,0);
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -19,27 +13,22 @@ public class Enemy : MonoBehaviour
 
         if(transform.position.y <= -5f)
         {
-            Start();
+            transform.position = new Vector3(Random.Range(-8f, 8f),7,0);
         }
     }
 
     private void OnTriggerEnter(Collider other) 
     {
-        if(other.transform.name == "Player")
+        if(other.name == "Player")
         {
-            Player player = other.transform.GetComponent<Player>();
-
-            if(player != null)
-            {
-                player.Damage();
-            }
-
+            Player player = other.GetComponent<Player>();
+            player.Damage();
             Destroy(this.gameObject);
         }
 
         //Debug.Log("HIT " + other.transform.name);
 
-        if(other.transform.name == "Laser(Clone)")
+        if(other.name == "Laser(Clone)")
         {
             Destroy(other.gameObject);
             Destroy(this.gameObject);

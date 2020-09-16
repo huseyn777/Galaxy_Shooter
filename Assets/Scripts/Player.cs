@@ -10,11 +10,13 @@ public class Player : MonoBehaviour
     [SerializeField] private float fireRate = 0.15f;
     private float nextFire = 0;
     [SerializeField] private int lives = 3;
+    private SpawnManager spawnManager;
 
     // Start is called before the first frame update
     void Start()
     {
         transform.position = new Vector3(0,0,0);
+        spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
     }
 
     // Update is called once per frame (60 frames per second)
@@ -26,6 +28,7 @@ public class Player : MonoBehaviour
     
     void LaserShoot()
     {
+        //Time.time counts how many seconds game was executing
         if(Input.GetKeyDown(KeyCode.Space) & Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
@@ -72,6 +75,7 @@ public class Player : MonoBehaviour
 
         if(lives == 0)
         {
+            spawnManager.PlayerIsDead();
             Destroy(this.gameObject);
         }
     }
