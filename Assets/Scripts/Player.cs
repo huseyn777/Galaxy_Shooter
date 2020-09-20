@@ -5,12 +5,14 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     //[SerializeField] lets manipulate private variables in inspecter
-    [SerializeField] private float speed = 5f;
+    private float speed = 5f;
     [SerializeField] private GameObject laserPrefab;
-    [SerializeField] private float fireRate = 0.15f;
+    private float fireRate = 0.15f;
     private float nextFire = 0;
-    [SerializeField] private int lives = 3;
+    private int lives = 3;
     private SpawnManager spawnManager;
+    private bool isTripleShotActive = false;
+    [SerializeField] private GameObject TripleShotPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -32,8 +34,15 @@ public class Player : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space) & Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
-            Instantiate(laserPrefab, new Vector3(transform.position.x, transform.position.y + 1.05f, transform.position.z), Quaternion.identity);
-            //Quaternion.identity -> default rotaition
+            if(!isTripleShotActive)
+            {
+                Instantiate(laserPrefab, new Vector3(transform.position.x, transform.position.y + 1.05f, transform.position.z), Quaternion.identity);
+                //Quaternion.identity -> default rotaition
+            }
+            else
+            {
+                Instantiate(TripleShotPrefab, transform.position, Quaternion.identity);
+            }
         }
     }
     
@@ -78,5 +87,22 @@ public class Player : MonoBehaviour
             spawnManager.PlayerIsDead();
             Destroy(this.gameObject);
         }
+    }
+
+    public void TripleShotActive()
+    {
+        isTripleShotActive = true;
+        StartCoroutine(TripleShotPowerDownRoutine());
+    }
+
+    //Let Triple Shot to be active for 5 sconds
+    IEnumerator TripleShotPowerDownRoutine()
+    {
+        while(isTripleShotActive)
+        {
+            yield return new WaitForSeconds(5.0f);
+            isTripleShotActive = false;   
+        }
+        
     }
 }

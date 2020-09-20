@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
     {
         transform.Translate(Vector3.down * speed * Time.deltaTime);
 
-        if(transform.position.y <= -5f)
+        if(transform.position.y <= -7f)
         {
             transform.position = new Vector3(Random.Range(-8f, 8f),7,0);
         }
@@ -28,7 +28,7 @@ public class Enemy : MonoBehaviour
 
         //Debug.Log("HIT " + other.transform.name);
 
-        if(other.name == "Laser(Clone)")
+        if(other.name == "Laser(Clone)" || other.name == "Laser" || other.name == "Laser (1)" || other.name == "Laser (2)" )
         {
             Destroy(other.gameObject);
             Destroy(this.gameObject);
