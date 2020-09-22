@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     private SpawnManager spawnManager;
     private bool isTripleShotActive = false;
     [SerializeField] private GameObject TripleShotPrefab;
+    private bool isSpeedBoostActive = false;
 
     // Start is called before the first frame update
     void Start()
@@ -48,34 +49,40 @@ public class Player : MonoBehaviour
     
     void Movment()
     {
-       float horizontalInput = Input.GetAxis("Horizontal");
-       float verticalInput = Input.GetAxis("Vertical");
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
 
-       Vector3 direction = new Vector3(horizontalInput,verticalInput,0);
+        Vector3 direction = new Vector3(horizontalInput,verticalInput,0);
 
-       //Time.deltaTime = translates mtr per frame to mtr per second
-       transform.Translate(direction * speed * Time.deltaTime);
+        //Time.deltaTime = translates mtr per frame to mtr per second
+        if(isSpeedBoostActive)
+        {
+            transform.Translate(direction * speed * 2 * Time.deltaTime); 
+        }
+        else
+        {
+            transform.Translate(direction * speed * Time.deltaTime);
+        }
 
-       if(transform.position.y >= 0)
-       {
-           transform.position = new Vector3(transform.position.x,0,transform.position.z);
-       }
-       else if(transform.position.y <= -4.8f)
-       {
-           transform.position = new Vector3(transform.position.x,-4.8f,transform.position.z);
-       }
-       //Alternative for boundaries above 
-       //transform.position = new Vector3(transform.position.x,Mathf.Clamp(transform.position.y,-3.8f,0),transform.position.z);
+        if(transform.position.y >= 0)
+        {
+            transform.position = new Vector3(transform.position.x,0,transform.position.z);
+        }
+        else if(transform.position.y <= -4.8f)
+        {
+            transform.position = new Vector3(transform.position.x,-4.8f,transform.position.z);
+        }
+        //Alternative for boundaries above 
+        //transform.position = new Vector3(transform.position.x,Mathf.Clamp(transform.position.y,-3.8f,0),transform.position.z);
 
-       if(transform.position.x > 11.3f)
-       {
-           transform.position = new Vector3(-11.3f,transform.position.y,transform.position.z);
-       }
-
-       else if(transform.position.x < -11.3f)
-       {
+        if(transform.position.x > 11.3f)
+        {
+            transform.position = new Vector3(-11.3f,transform.position.y,transform.position.z);
+        }
+        else if(transform.position.x < -11.3f)
+        {
             transform.position = new Vector3(11.3f,transform.position.y,transform.position.z);
-       }
+        }
     }
 
     public void Damage()
@@ -102,7 +109,22 @@ public class Player : MonoBehaviour
         {
             yield return new WaitForSeconds(5.0f);
             isTripleShotActive = false;   
+        }   
+    }
+
+    public void SpeedBoostActive()
+    {
+        isSpeedBoostActive = true;
+        StartCoroutine(SpeedBoostDownRoutine());
+    }
+
+    //Let Speed Boost to be active for 5 sconds
+    IEnumerator SpeedBoostDownRoutine()
+    {
+        while(isSpeedBoostActive)
+        {
+            yield return new WaitForSeconds(5.0f);
+            isSpeedBoostActive = false;   
         }
-        
     }
 }
