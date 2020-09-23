@@ -37,7 +37,7 @@ public class Powerup : MonoBehaviour
 
             else if(powerupID == 2)
             {
-                Debug.Log("HIT");
+                other.GetComponent<Player>().ShieldActive();
             }
 
             Destroy(this.gameObject);

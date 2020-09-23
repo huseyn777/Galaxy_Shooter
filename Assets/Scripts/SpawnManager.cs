@@ -33,7 +33,7 @@ public class SpawnManager : MonoBehaviour
         while(!stopSpawning)
         {
             yield return new WaitForSeconds(Random.Range(3, 8));
-            Instantiate(powerups[Random.Range(0,2)], new Vector3(Random.Range(-8f, 8f),7,0),Quaternion.identity);
+            Instantiate(powerups[Random.Range(0,3)], new Vector3(Random.Range(-8f, 8f),7,0),Quaternion.identity);
         }
     }
 
