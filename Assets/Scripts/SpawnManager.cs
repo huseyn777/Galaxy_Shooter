@@ -24,7 +24,7 @@ public class SpawnManager : MonoBehaviour
             GameObject newEnemy = Instantiate(enemyPrefab, new Vector3(Random.Range(-8f, 8f),7,0),Quaternion.identity);
             newEnemy.transform.parent = enemyContainer.transform;
             //yield return value(in this example object that makes system to wait for 5 seconds) and then continuies execution from where it left
-            yield return new WaitForSeconds(5.0f);
+            yield return new WaitForSeconds(3f);
         }
     }
 

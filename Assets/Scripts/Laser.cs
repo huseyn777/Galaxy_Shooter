@@ -13,7 +13,6 @@ public class Laser : MonoBehaviour
 
         if(transform.position.y >= 8f)
         {
-            
             //Check if laser has parent(Triple Shot) and if it has detroy it so that it is removed from the scene
             if(transform.parent == null)
             {

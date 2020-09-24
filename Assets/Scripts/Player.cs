@@ -16,12 +16,15 @@ public class Player : MonoBehaviour
     private bool isSpeedBoostActive = false;
     private bool isShieldActive = false;
     [SerializeField] private GameObject shield;
+    private int score;
+    private UIManager UIManager;
 
     // Start is called before the first frame update
     void Start()
     {
         transform.position = new Vector3(0,0,0);
         spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
+        UIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
     }
 
     // Update is called once per frame (60 frames per second)
@@ -97,6 +100,7 @@ public class Player : MonoBehaviour
             return;
         }
         lives--;
+        UIManager.UpdateLives(lives);
 
         if(lives == 0)
         {
@@ -142,5 +146,11 @@ public class Player : MonoBehaviour
         isShieldActive = true;
         //Activates gameobject
         shield.SetActive(true);
+    }
+
+    public void AddScore()
+    {
+        score = score + 10;
+        UIManager.UpdateScore(score);
     }
 }
