@@ -18,6 +18,10 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject shield;
     private int score;
     private UIManager UIManager;
+    [SerializeField] private GameObject rightEngineFire;
+    [SerializeField] private GameObject leftEngineFire;
+    private bool oneEngineIsOnFire = false;
+    private int randomEngine;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +29,7 @@ public class Player : MonoBehaviour
         transform.position = new Vector3(0,0,0);
         spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
         UIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        randomEngine = Random.Range(0,2);
     }
 
     // Update is called once per frame (60 frames per second)
@@ -101,6 +106,28 @@ public class Player : MonoBehaviour
         }
         lives--;
         UIManager.UpdateLives(lives);
+
+        if(lives < 3 && lives != 0)
+        {
+            if(randomEngine == 0 && !oneEngineIsOnFire)
+            {
+                leftEngineFire.SetActive(true);
+                oneEngineIsOnFire = true;
+            }
+            else if(randomEngine == 1 && !oneEngineIsOnFire)
+            {
+                rightEngineFire.SetActive(true);
+                oneEngineIsOnFire = true;
+            }
+            else if(oneEngineIsOnFire && randomEngine == 0)
+            {
+                rightEngineFire.SetActive(true);
+            }
+            else if(oneEngineIsOnFire && randomEngine == 1)
+            {
+                leftEngineFire.SetActive(true);
+            }
+        }
 
         if(lives == 0)
         {

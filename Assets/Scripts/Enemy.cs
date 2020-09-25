@@ -6,11 +6,13 @@ public class Enemy : MonoBehaviour
 {
     private float speed = 4f;
     private Player player;
+    Animator animator;
     
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.Find("Player").GetComponent<Player>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -22,14 +24,26 @@ public class Enemy : MonoBehaviour
         {
             transform.position = new Vector3(Random.Range(-8f, 8f),7,0);
         }
+       
     }
 
     private void OnTriggerEnter2D(Collider2D other) 
     {
+        if( GetComponent<BoxCollider2D>().isTrigger == false)
+        {
+            return;
+        }
+        
         if(other.name == "Player")
         {   
+            animator.SetTrigger("OnEnemyDeath");
             other.GetComponent<Player>().Damage();
-            Destroy(this.gameObject);
+            speed = 0;
+            //Turn off trigger functionality of enemy
+            GetComponent<BoxCollider2D>().isTrigger = false;
+            //Destroys object in 2.3 seconds
+            Destroy(this.gameObject,2.3f);
+            
         }
 
         //Debug.Log("HIT " + other.transform.name);
@@ -37,8 +51,13 @@ public class Enemy : MonoBehaviour
         if(other.name == "Laser(Clone)" || other.name == "Laser" || other.name == "Laser (1)" || other.name == "Laser (2)" )
         {
             Destroy(other.gameObject);
+            animator.SetTrigger("OnEnemyDeath");
             player.AddScore();
-            Destroy(this.gameObject);
+            speed = 0;
+            //Turn off trigger functionality of enemy
+            GetComponent<BoxCollider2D>().isTrigger = false;
+            //Destroys object in 2.3 seconds
+            Destroy(this.gameObject,2.3f);
         }
     }
 }

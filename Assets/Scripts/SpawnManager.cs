@@ -10,7 +10,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject [] powerups;
 
     // Start is called before the first frame update
-    void Start()
+    public void StartSpawning()
     {
        StartCoroutine(SpawnEnemyRoutine());
        StartCoroutine(SpawnTripleShotPowerupRoutine());
