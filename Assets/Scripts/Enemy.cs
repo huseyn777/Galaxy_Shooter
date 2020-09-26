@@ -6,13 +6,15 @@ public class Enemy : MonoBehaviour
 {
     private float speed = 4f;
     private Player player;
-    Animator animator;
+    private Animator animator;
+    private AudioSource explosionSound;
     
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.Find("Player").GetComponent<Player>();
         animator = GetComponent<Animator>();
+        explosionSound = GameObject.Find("Explosion Sound").GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -36,6 +38,7 @@ public class Enemy : MonoBehaviour
         
         if(other.name == "Player")
         {   
+            explosionSound.Play();
             animator.SetTrigger("OnEnemyDeath");
             other.GetComponent<Player>().Damage();
             speed = 0;
@@ -51,6 +54,7 @@ public class Enemy : MonoBehaviour
         if(other.name == "Laser(Clone)" || other.name == "Laser" || other.name == "Laser (1)" || other.name == "Laser (2)" )
         {
             Destroy(other.gameObject);
+            explosionSound.Play();
             animator.SetTrigger("OnEnemyDeath");
             player.AddScore();
             speed = 0;

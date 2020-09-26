@@ -7,6 +7,12 @@ public class Powerup : MonoBehaviour
     private float speed = 3f;
     // id = 0 -> triple shot ; id = 1 -> speed ; id = 0 -> shield 
     [SerializeField] private int powerupID;
+    private AudioSource powerupSound;
+
+    void Start()
+    {
+        powerupSound = GameObject.Find("Powerup Sound").GetComponent<AudioSource>(); 
+    }
 
     // Update is called once per frame
     void Update()
@@ -23,6 +29,7 @@ public class Powerup : MonoBehaviour
     {
         if(other.name == "Player")
         {
+            powerupSound.Play();
             //triple shot
             if(powerupID == 0)
             {

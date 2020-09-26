@@ -95,7 +95,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.013667822, y: 0.0060658455}
@@ -113,6 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab89260d984bef948aa6fad267c1fffa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosionPrefab: {fileID: 6215005753314157932, guid: a0212837a46b1b04c875b3f213a26207, type: 3}
 --- !u!50 &1393350791427883807
 Rigidbody2D:
   serializedVersion: 4

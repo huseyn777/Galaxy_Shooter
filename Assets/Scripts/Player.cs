@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject leftEngineFire;
     private bool oneEngineIsOnFire = false;
     private int randomEngine;
+    private AudioSource laserSound;
+    private AudioSource explosionSound;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +32,8 @@ public class Player : MonoBehaviour
         spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
         UIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         randomEngine = Random.Range(0,2);
+        laserSound = GameObject.Find("Laser Sound").GetComponent<AudioSource>();
+        explosionSound = GameObject.Find("Explosion Sound").GetComponent<AudioSource>();
     }
 
     // Update is called once per frame (60 frames per second)
@@ -54,6 +58,7 @@ public class Player : MonoBehaviour
             {
                 Instantiate(TripleShotPrefab, transform.position, Quaternion.identity);
             }
+            laserSound.Play();
         }
     }
     
