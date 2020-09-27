@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//using UnityStandardAssets.CrossPlatformInput; for crossPlatform Development
 
 public class Player : MonoBehaviour
 {
@@ -46,7 +47,7 @@ public class Player : MonoBehaviour
     void LaserShoot()
     {
         //Time.time counts how many seconds game was executing
-        if(Input.GetKeyDown(KeyCode.Space) & Time.time > nextFire)
+        if(Input.GetKeyDown(KeyCode.Space) & Time.time > nextFire) //CrossPlatformInputManager.GetButtonDown("Fire")//for android
         {
             nextFire = Time.time + fireRate;
             if(!isTripleShotActive)
@@ -64,8 +65,8 @@ public class Player : MonoBehaviour
     
     void Movment()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
+       float horizontalInput = Input.GetAxis("Horizontal"); //float horizontalInput = CrossPlatformInputManager.GetAxis("Horizontal");//for android
+       float verticalInput = Input.GetAxis("Vertical");  //float verticalInput = CrossPlatformInputManager.GetAxis("Vertical");//for android
 
         Vector3 direction = new Vector3(horizontalInput,verticalInput,0);
 
